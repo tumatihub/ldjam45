@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     State _state = State.SEARCHING;
 
     NavMeshAgent _navAgent;
+    NavMeshObstacle _navObstacle;
 
     Animator _anim;
 
@@ -24,6 +25,9 @@ public class Enemy : MonoBehaviour
     {
         _health = _maxHealth;
         _navAgent = GetComponent<NavMeshAgent>();
+        _navObstacle = GetComponent<NavMeshObstacle>();
+        _navObstacle.enabled = false;
+
         _anim = GetComponent<Animator>();
     }
 
@@ -35,12 +39,14 @@ public class Enemy : MonoBehaviour
                 SearchForTarget();
                 break;
             case State.HITING:
-                print("Hiting!");
                 break;
             case State.WALKING:
                 if (GetIsInRange())
                 {
                     print("Stopped");
+                    _navAgent.isStopped = true;
+                    _navAgent.enabled = false;
+                    _navObstacle.enabled = true;
                     _state = State.HITING;
                     transform.LookAt(_target);
                     _anim.SetBool("hitting", true);
@@ -57,15 +63,25 @@ public class Enemy : MonoBehaviour
     private void SearchForTarget()
     {
         var _objs = GameObject.FindObjectsOfType<Building>();
-
+        var _dist = Mathf.Infinity;
+        Building _chosen = null;
         foreach (var _obj in _objs)
         {
             if (!_obj.IsDestroyed)
             {
-                _target = _obj.transform;
-                _state = State.WALKING;
-                _navAgent.destination = _target.transform.position;
+                var _nextDist = Vector3.Distance(transform.position, _obj.transform.position);
+                if (_nextDist < _dist)
+                {
+                    _dist = _nextDist;
+                    _chosen = _obj;
+                }
             }
+        }
+        if (_chosen != null)
+        {
+            _target = _chosen.transform;
+            _state = State.WALKING;
+            _navAgent.destination = _target.transform.position;
         }
     }
 
@@ -94,6 +110,8 @@ public class Enemy : MonoBehaviour
         _building.TakeDamage(_damage);
         if (_building.IsDestroyed)
         {
+            _navObstacle.enabled = false;
+            _navAgent.enabled = true;
             _state = State.SEARCHING;
             _anim.SetBool("hitting", false);
         }

@@ -12,6 +12,7 @@ public class Building : MonoBehaviour
 
     [SerializeField] float _regenDeleayInSeconds = 1f;
     [SerializeField] float _regenAmount = 5f;
+    [SerializeField] float _initialFloorHealth = 20f;
 
     float _timeBetweenRegen;
 
@@ -56,7 +57,7 @@ public class Building : MonoBehaviour
         _baseFloor.SetActive(false);
         _activeFloor += 1;
         _floors[_activeFloor-1].SetActive(true);
-        _health = 0;
+        _health = _initialFloorHealth;
     }
 
     public void TakeDamage(float damage)
