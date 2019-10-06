@@ -56,11 +56,16 @@ public class Enemy : MonoBehaviour
 
     private void SearchForTarget()
     {
-        _target = GameObject.FindObjectOfType<Building>().transform;
-        if (_target != null)
+        var _objs = GameObject.FindObjectsOfType<Building>();
+
+        foreach (var _obj in _objs)
         {
-            _state = State.WALKING;
-            _navAgent.destination = _target.transform.position;
+            if (!_obj.IsDestroyed)
+            {
+                _target = _obj.transform;
+                _state = State.WALKING;
+                _navAgent.destination = _target.transform.position;
+            }
         }
     }
 
