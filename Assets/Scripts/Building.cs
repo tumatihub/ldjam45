@@ -78,6 +78,11 @@ public class Building : MonoBehaviour
         _floors[_activeFloor-1].SetActive(true);
         _health = _initialFloorHealth;
         UpdateSliderHealth();
+
+        if (_activeFloor == _floors.Length)
+        {
+            _gameController.IncreaseMultiplier();
+        }
     }
 
     public void TakeDamage(float damage)
@@ -101,6 +106,10 @@ public class Building : MonoBehaviour
         }
         else
         {
+            if (_activeFloor == _floors.Length)
+            {
+                _gameController.DecreaseMultiplier();
+            }
             _floors[_activeFloor - 1].SetActive(false);
             _activeFloor -= 1;
             _health = _maxHealth;

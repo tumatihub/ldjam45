@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
     NavMeshObstacle _navObstacle;
 
     Animator _anim;
+    GameController _gameController;
 
     void Start()
     {
@@ -31,6 +32,8 @@ public class Enemy : MonoBehaviour
         _navObstacle.enabled = false;
 
         _anim = GetComponent<Animator>();
+
+        _gameController = FindObjectOfType<GameController>();
     }
 
     private void Update()
@@ -105,6 +108,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        _gameController.ScoreEnemyDeath();
         Destroy(gameObject);
     }
 

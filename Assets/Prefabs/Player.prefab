@@ -70,7 +70,10 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 1925200472697148260, guid: fd3d5b548068e56439ed748c1d366717,
     type: 3}
   _bulletSpeed: 300
-  _bulletDamage: 5
+  _bulletDamage: 10
+  _bulletDelay: 0.2
+  _impulse: 300
+  _dashingCooldown: 1
 --- !u!208 &7954595886958292419
 NavMeshObstacle:
   m_ObjectHideFlags: 0

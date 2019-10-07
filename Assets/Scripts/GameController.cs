@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -12,6 +14,11 @@ public class GameController : MonoBehaviour
     [SerializeField] float _timeToNextSpawner = 20f;
     float _timer = 0;
 
+    [SerializeField] TMP_Text _multiplierTextUI;
+    [SerializeField] TMP_Text _scoreTextUI;
+    int _score = 0;
+    [SerializeField] int _enemyDeathBaseScore = 5;
+    int _scoreMultiplier = 1;
 
     // Use this for initialization
     void Start()
@@ -62,4 +69,34 @@ public class GameController : MonoBehaviour
         _building.gameObject.SetActive(true);
         _buildings.RemoveAt(_index);
     }
+
+    void UpdateScore()
+    {
+        _scoreTextUI.text = _score.ToString();
+    }
+
+    void UpdateMultiplier()
+    {
+        _multiplierTextUI.text = "x" + _scoreMultiplier.ToString();
+    }
+
+    public void IncreaseMultiplier()
+    {
+        _scoreMultiplier *= 2;
+        UpdateMultiplier();
+    }
+
+    public void DecreaseMultiplier()
+    {
+        _scoreMultiplier = Mathf.Max(_scoreMultiplier/2, 1);
+        UpdateMultiplier();
+    }
+
+    public void ScoreEnemyDeath()
+    {
+        _score += _enemyDeathBaseScore * _scoreMultiplier;
+        UpdateScore();
+    }
+
+
 }
