@@ -73,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 10
   _target: {fileID: 0}
-  _damage: 10
+  _damage: 5
   _distanceToAttack: 3.5
   _searchRange: 10
 --- !u!65 &4444312340542899047

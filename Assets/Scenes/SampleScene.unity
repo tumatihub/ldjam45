@@ -904,7 +904,7 @@ MonoBehaviour:
   - {fileID: 911930601}
   _firstBuilding: {fileID: 639592885}
   _firstSpawner: {fileID: 1962218916}
-  _timeToNextSpawner: 40
+  _timeToNextSpawner: 60
 --- !u!4 &473914671
 Transform:
   m_ObjectHideFlags: 0
@@ -5989,6 +5989,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _impulse
       value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 8362587751994407226, guid: ddd1ada7117ec094384604e7613bfde6,
+        type: 3}
+      propertyPath: _bulletDamage
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7954595886958292419, guid: ddd1ada7117ec094384604e7613bfde6, type: 3}
