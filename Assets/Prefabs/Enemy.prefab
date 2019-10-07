@@ -76,6 +76,8 @@ MonoBehaviour:
   _damage: 5
   _distanceToAttack: 3.5
   _searchRange: 10
+  _deathParticlesPrefab: {fileID: 7186343462270937793, guid: 621a90a2de24982498c65b0b4aac8665,
+    type: 3}
 --- !u!65 &4444312340542899047
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -182,7 +184,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 01cbf5cb13f90d34c98c9941cf74b1a3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -484,7 +486,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 01cbf5cb13f90d34c98c9941cf74b1a3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

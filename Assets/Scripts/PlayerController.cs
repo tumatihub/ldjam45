@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     float _dashingCount = 0;
     [SerializeField] float _dashingCooldown = 1f;
 
+    [SerializeField] ParticleSystem _dashParticles;
+
 
     void Start()
     {
@@ -77,6 +79,7 @@ public class PlayerController : MonoBehaviour
         {
             _rb.AddForce(transform.forward * _impulse, ForceMode.Impulse);
             _dashingCount = _dashingCooldown;
+            _dashParticles.Play();
         }
         
     }

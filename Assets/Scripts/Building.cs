@@ -21,6 +21,7 @@ public class Building : MonoBehaviour
     int _activeFloor = 0;
     [SerializeField] GameObject _destroyedFloor;
     [SerializeField] GameObject _baseFloor;
+    [SerializeField] ParticleSystem _newFloorParticles;
 
     GameController _gameController;
     bool _completedOnce = false;
@@ -73,6 +74,7 @@ public class Building : MonoBehaviour
             return;
         }
 
+        _newFloorParticles.Play();
         _baseFloor.SetActive(false);
         _activeFloor += 1;
         _floors[_activeFloor-1].SetActive(true);

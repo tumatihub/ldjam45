@@ -24,6 +24,10 @@ public class Enemy : MonoBehaviour
     Animator _anim;
     GameController _gameController;
 
+    [SerializeField] ParticleSystem _deathParticlesPrefab;
+
+    PlayerController _player;
+
     void Start()
     {
         _health = _maxHealth;
@@ -34,6 +38,12 @@ public class Enemy : MonoBehaviour
         _anim = GetComponent<Animator>();
 
         _gameController = FindObjectOfType<GameController>();
+
+        _player = FindObjectOfType<PlayerController>();
+        if (_player == null)
+        {
+            Debug.LogWarning("Enemy cant find player!");
+        }
     }
 
     private void Update()
@@ -108,6 +118,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        Instantiate(_deathParticlesPrefab, transform.position, Quaternion.LookRotation((transform.position - _player.transform.position)));
         _gameController.ScoreEnemyDeath();
         Destroy(gameObject);
     }

@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour
 
     void ActiveRandomSpawner()
     {
+        if (_spawners.Count == 0) return;
         var _index = Random.Range(0, _spawners.Count);
         print("Active spawner " + _index);
         var _spawner = _spawners[_index];
@@ -64,6 +65,7 @@ public class GameController : MonoBehaviour
 
     public void ActiveRandomBuilding()
     {
+        if (_buildings.Count == 0) return;
         var _index = Random.Range(0, _spawners.Count);
         var _building = _buildings[_index];
         _building.gameObject.SetActive(true);
