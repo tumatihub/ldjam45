@@ -7,6 +7,7 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     [SerializeField] List<Building> _buildings = new List<Building>();
+    List<Building> _activeBuildings = new List<Building>();
     [SerializeField] List<EnemySpawner> _spawners = new List<EnemySpawner>();
     [SerializeField] GameObject _firstBuilding;
     [SerializeField] GameObject _firstSpawner;
@@ -21,16 +22,21 @@ public class GameController : MonoBehaviour
     int _scoreMultiplier = 1;
 
     [SerializeField] Animator _canvasAnim;
+    [SerializeField] GameObject _endGamePanel;
+    [SerializeField] TMP_Text _finalScoreUI;
 
     // Use this for initialization
     void Start()
     {
+        Time.timeScale = 1;
         Invoke("StartFirstBuilding", 5f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        CheckActiveBuildings();
+
         if (_timer >= _timeToNextSpawner)
         {
             ActiveRandomSpawner();
@@ -56,6 +62,7 @@ public class GameController : MonoBehaviour
     {
         _firstBuilding.SetActive(true);
         _buildings.Remove(_firstBuilding.GetComponent<Building>());
+        _activeBuildings.Add(_firstBuilding.GetComponent<Building>());
         StartFirstSpawner();
     }
 
@@ -71,6 +78,7 @@ public class GameController : MonoBehaviour
         var _index = Random.Range(0, _spawners.Count);
         var _building = _buildings[_index];
         _building.gameObject.SetActive(true);
+        _activeBuildings.Add(_building);
         _buildings.RemoveAt(_index);
     }
 
@@ -104,5 +112,22 @@ public class GameController : MonoBehaviour
         UpdateScore();
     }
 
+    void CheckActiveBuildings()
+    {
+        if (_activeBuildings.Count == 0) return;
+        foreach (var _building in _activeBuildings)
+        {
+            if (!_building.IsDestroyed) return;
+        }
 
+        EndGame();
+
+    }
+
+    void EndGame()
+    {
+        Time.timeScale = 0;
+        _finalScoreUI.text = _scoreTextUI.text;
+        _endGamePanel.SetActive(true);
+    }
 }
