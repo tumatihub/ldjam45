@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _bulletSpeed = 300f;
     [SerializeField] float _bulletDamage = 5f;
     private float _bulletLifeTime = 5f;
+    [SerializeField] float _impulse = 300f;
+    float _dashingCount = 0;
+    [SerializeField] float _dashingCooldown = 1f;
 
     void Start()
     {
@@ -28,6 +31,11 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        if (_dashingCount >= 0)
+        {
+            _dashingCount -= Time.deltaTime;
+        }
+
         _movement.x = Input.GetAxisRaw("Horizontal");
         _movement.z = Input.GetAxisRaw("Vertical");
         
@@ -55,6 +63,12 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         _rb.velocity = _movement * _speed * Time.fixedDeltaTime;
+
+        if (Input.GetMouseButtonDown(1) && _dashingCount <= 0)
+        {
+            _rb.AddForce(transform.forward * _impulse, ForceMode.Impulse);
+            _dashingCount = _dashingCooldown;
+        }
         
     }
 }
