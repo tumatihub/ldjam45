@@ -22,8 +22,12 @@ public class Building : MonoBehaviour
     [SerializeField] GameObject _destroyedFloor;
     [SerializeField] GameObject _baseFloor;
 
+    GameController _gameController;
+    bool _completedOnce = false;
+
     void Start()
     {
+        _gameController = FindObjectOfType<GameController>();
     }
 
     private void Update()
@@ -59,7 +63,15 @@ public class Building : MonoBehaviour
 
     private void AddFloor()
     {
-        if (_activeFloor >= _floors.Length) return;
+        if (_activeFloor >= _floors.Length)
+        {
+            if (!_completedOnce)
+            {
+                _completedOnce = true;
+                _gameController.ActiveRandomBuilding();
+            }
+            return;
+        }
 
         _baseFloor.SetActive(false);
         _activeFloor += 1;
