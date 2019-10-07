@@ -19,9 +19,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _bulletSpeed = 300f;
     [SerializeField] float _bulletDamage = 5f;
     private float _bulletLifeTime = 5f;
+    [SerializeField] float _bulletDelay = .5f;
+    float _bulletTimer;
     [SerializeField] float _impulse = 300f;
     float _dashingCount = 0;
     [SerializeField] float _dashingCooldown = 1f;
+
 
     void Start()
     {
@@ -34,6 +37,11 @@ public class PlayerController : MonoBehaviour
         if (_dashingCount >= 0)
         {
             _dashingCount -= Time.deltaTime;
+        }
+
+        if (_bulletTimer > 0)
+        {
+            _bulletTimer -= Time.deltaTime;
         }
 
         _movement.x = Input.GetAxisRaw("Horizontal");
@@ -51,8 +59,9 @@ public class PlayerController : MonoBehaviour
             Debug.DrawLine(_cameraRay.origin, _pointToLook, Color.blue);
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0) && _bulletTimer <= 0)
         {
+            _bulletTimer = _bulletDelay;
             var _bullet = Instantiate(_bulletPrefab, _bulletPoint.position, Quaternion.identity);
             _bullet.GetComponent<Rigidbody>().velocity = transform.forward * _bulletSpeed;
             _bullet.GetComponent<Bullet>().Damage = _bulletDamage;
