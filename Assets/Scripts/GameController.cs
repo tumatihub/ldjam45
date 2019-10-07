@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour
     [SerializeField] int _enemyDeathBaseScore = 5;
     int _scoreMultiplier = 1;
 
+    [SerializeField] Animator _canvasAnim;
+
     // Use this for initialization
     void Start()
     {
@@ -75,11 +77,13 @@ public class GameController : MonoBehaviour
     void UpdateScore()
     {
         _scoreTextUI.text = _score.ToString();
+        _canvasAnim.SetTrigger("score");
     }
 
     void UpdateMultiplier()
     {
         _multiplierTextUI.text = "x" + _scoreMultiplier.ToString();
+        _canvasAnim.SetTrigger("multiplier");
     }
 
     public void IncreaseMultiplier()
