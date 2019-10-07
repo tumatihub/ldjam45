@@ -75,6 +75,7 @@ MonoBehaviour:
   _target: {fileID: 0}
   _damage: 10
   _distanceToAttack: 3.5
+  _searchRange: 10
 --- !u!65 &4444312340542899047
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using UnityEngine.AI;
 
@@ -11,6 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Transform _target;
     [SerializeField] float _damage = 10f;
     [SerializeField] float _distanceToAttack = 2f;
+    [SerializeField] float _searchRange = 10f;
 
     enum State { SEARCHING, HITING, WALKING}
 
@@ -43,7 +45,6 @@ public class Enemy : MonoBehaviour
             case State.WALKING:
                 if (GetIsInRange())
                 {
-                    print("Stopped");
                     _navAgent.isStopped = true;
                     _navAgent.enabled = false;
                     _navObstacle.enabled = true;
@@ -62,27 +63,31 @@ public class Enemy : MonoBehaviour
 
     private void SearchForTarget()
     {
-        var _objs = GameObject.FindObjectsOfType<Building>();
-        var _dist = Mathf.Infinity;
+        var _objs = Physics.OverlapSphere(transform.position, _searchRange);
+        List<Transform> _buildingsToChoose = new List<Transform>();
+        
         Building _chosen = null;
         foreach (var _obj in _objs)
         {
-            if (!_obj.IsDestroyed)
+            var _building = _obj.GetComponent<Building>();
+            if (_building != null && !_building.IsDestroyed)
             {
-                var _nextDist = Vector3.Distance(transform.position, _obj.transform.position);
-                if (_nextDist < _dist)
-                {
-                    _dist = _nextDist;
-                    _chosen = _obj;
-                }
+                _buildingsToChoose.Add(_obj.transform);
             }
         }
-        if (_chosen != null)
+
+        if (_buildingsToChoose.Count == 0)
         {
-            _target = _chosen.transform;
-            _state = State.WALKING;
-            _navAgent.destination = _target.transform.position;
+            _searchRange *= 2;
+            _state = State.SEARCHING;
+            return;
         }
+
+        var _index = UnityEngine.Random.Range(0, _buildingsToChoose.Count);
+        _chosen = _buildingsToChoose[_index].GetComponent<Building>();
+        _target = _chosen.transform;
+        _state = State.WALKING;
+        _navAgent.destination = _target.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -115,5 +120,11 @@ public class Enemy : MonoBehaviour
             _state = State.SEARCHING;
             _anim.SetBool("hitting", false);
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, _searchRange);
     }
 }

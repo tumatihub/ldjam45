@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public class Building : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Building : MonoBehaviour
     [SerializeField] float _regenDeleayInSeconds = 1f;
     [SerializeField] float _regenAmount = 5f;
     [SerializeField] float _initialFloorHealth = 20f;
-
+    [SerializeField] Slider _sliderHealth;
     float _timeBetweenRegen;
 
     [SerializeField] GameObject[] _floors;
@@ -41,6 +42,11 @@ public class Building : MonoBehaviour
         }
     }
 
+    private void UpdateSliderHealth()
+    {
+        _sliderHealth.value = _health / _maxHealth;
+    }
+
     private void RegenLife()
     {
         _health = Mathf.Min(_health + _regenAmount, _maxHealth);
@@ -48,6 +54,7 @@ public class Building : MonoBehaviour
         {
             AddFloor();
         }
+        UpdateSliderHealth();
     }
 
     private void AddFloor()
@@ -58,6 +65,7 @@ public class Building : MonoBehaviour
         _activeFloor += 1;
         _floors[_activeFloor-1].SetActive(true);
         _health = _initialFloorHealth;
+        UpdateSliderHealth();
     }
 
     public void TakeDamage(float damage)
@@ -67,6 +75,7 @@ public class Building : MonoBehaviour
         {
             RemoveFloor();
         }
+        UpdateSliderHealth();
     }
 
     private void RemoveFloor()
@@ -84,5 +93,6 @@ public class Building : MonoBehaviour
             _activeFloor -= 1;
             _health = _maxHealth;
         }
+        UpdateSliderHealth();
     }
 }
