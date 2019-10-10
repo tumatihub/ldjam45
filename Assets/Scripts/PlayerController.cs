@@ -26,11 +26,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _dashingCooldown = 1f;
 
     [SerializeField] ParticleSystem _dashParticles;
-
+    AudioSource _audioSource;
+    [SerializeField] AudioClip _shootSFX;
+    [SerializeField] AudioClip _dashSFX;
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();     
+        _rb = GetComponent<Rigidbody>();
+        _audioSource = GetComponent<AudioSource>();
     }
     
     
@@ -63,6 +66,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButton(0) && _bulletTimer <= 0)
         {
+            _audioSource.PlayOneShot(_shootSFX);
             _bulletTimer = _bulletDelay;
             var _bullet = Instantiate(_bulletPrefab, _bulletPoint.position, Quaternion.identity);
             _bullet.GetComponent<Rigidbody>().velocity = transform.forward * _bulletSpeed;
@@ -77,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) && _dashingCount <= 0)
         {
+            _audioSource.PlayOneShot(_dashSFX);
             _rb.AddForce(transform.forward * _impulse, ForceMode.Impulse);
             _dashingCount = _dashingCooldown;
             _dashParticles.Play();

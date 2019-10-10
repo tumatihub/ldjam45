@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] ParticleSystem _deathParticlesPrefab;
 
     PlayerController _player;
+    AudioSource _audioSource;
 
     void Start()
     {
@@ -36,7 +37,7 @@ public class Enemy : MonoBehaviour
         _navObstacle.enabled = false;
 
         _anim = GetComponent<Animator>();
-
+        _audioSource = GetComponent<AudioSource>();
         _gameController = FindObjectOfType<GameController>();
 
         _player = FindObjectOfType<PlayerController>();
