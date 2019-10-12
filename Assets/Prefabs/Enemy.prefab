@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6719883622483642958}
   - component: {fileID: 5838749284466617720}
   - component: {fileID: -4127676626182692746}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,6 @@ MonoBehaviour:
   _searchRange: 10
   _deathParticlesPrefab: {fileID: 7186343462270937793, guid: 621a90a2de24982498c65b0b4aac8665,
     type: 3}
-  _deathSFX: {fileID: 8300000, guid: b11b6bf100bf1624aa782ef19a2e16a0, type: 3}
 --- !u!65 &4444312340542899047
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -236,7 +235,7 @@ GameObject:
   - component: {fileID: 1199858482123707694}
   - component: {fileID: 1199858482123707695}
   - component: {fileID: 1199858482123707692}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,7 +537,7 @@ GameObject:
   - component: {fileID: 1199858482731966510}
   - component: {fileID: 1199858482731966511}
   - component: {fileID: 1199858482731966508}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
